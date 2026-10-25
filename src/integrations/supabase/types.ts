@@ -14,7 +14,182 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      expenses: {
+        Row: {
+          amount: number
+          category: string
+          created_at: string
+          currency: string
+          description: string
+          expense_date: string
+          expense_type: string
+          id: string
+          trip_id: string
+          user_id: string
+        }
+        Insert: {
+          amount: number
+          category: string
+          created_at?: string
+          currency: string
+          description?: string
+          expense_date?: string
+          expense_type?: string
+          id?: string
+          trip_id: string
+          user_id?: string
+        }
+        Update: {
+          amount?: number
+          category?: string
+          created_at?: string
+          currency?: string
+          description?: string
+          expense_date?: string
+          expense_type?: string
+          id?: string
+          trip_id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "expenses_trip_id_fkey"
+            columns: ["trip_id"]
+            isOneToOne: false
+            referencedRelation: "trips"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      profiles: {
+        Row: {
+          avatar_url: string | null
+          created_at: string
+          full_name: string | null
+          id: string
+          preferred_currency: string
+          travel_preferences: Json
+          updated_at: string
+        }
+        Insert: {
+          avatar_url?: string | null
+          created_at?: string
+          full_name?: string | null
+          id: string
+          preferred_currency?: string
+          travel_preferences?: Json
+          updated_at?: string
+        }
+        Update: {
+          avatar_url?: string | null
+          created_at?: string
+          full_name?: string | null
+          id?: string
+          preferred_currency?: string
+          travel_preferences?: Json
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      saved_places: {
+        Row: {
+          category: string | null
+          created_at: string
+          destination: string | null
+          id: string
+          location_data: Json | null
+          place_name: string
+          user_id: string
+        }
+        Insert: {
+          category?: string | null
+          created_at?: string
+          destination?: string | null
+          id?: string
+          location_data?: Json | null
+          place_name: string
+          user_id?: string
+        }
+        Update: {
+          category?: string | null
+          created_at?: string
+          destination?: string | null
+          id?: string
+          location_data?: Json | null
+          place_name?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      trips: {
+        Row: {
+          accommodation_preferences: string | null
+          budget: number
+          budget_category: string
+          created_at: string
+          currency: string
+          destination: string
+          end_date: string
+          id: string
+          itinerary: Json | null
+          notes: string | null
+          pace: string
+          start_date: string
+          status: string
+          title: string
+          transportation_preferences: string | null
+          travel_preferences: Json
+          traveler_count: number
+          traveler_type: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          accommodation_preferences?: string | null
+          budget?: number
+          budget_category?: string
+          created_at?: string
+          currency?: string
+          destination: string
+          end_date: string
+          id?: string
+          itinerary?: Json | null
+          notes?: string | null
+          pace?: string
+          start_date: string
+          status?: string
+          title: string
+          transportation_preferences?: string | null
+          travel_preferences?: Json
+          traveler_count?: number
+          traveler_type?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Update: {
+          accommodation_preferences?: string | null
+          budget?: number
+          budget_category?: string
+          created_at?: string
+          currency?: string
+          destination?: string
+          end_date?: string
+          id?: string
+          itinerary?: Json | null
+          notes?: string | null
+          pace?: string
+          start_date?: string
+          status?: string
+          title?: string
+          transportation_preferences?: string | null
+          travel_preferences?: Json
+          traveler_count?: number
+          traveler_type?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
