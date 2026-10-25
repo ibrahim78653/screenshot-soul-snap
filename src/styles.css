@@ -134,3 +134,9 @@
   transition: transform .25s ease, box-shadow .25s ease;
   &:hover { transform: translateY(-3px); box-shadow: var(--shadow-lift); }
 }
+.map-pin {
+  width: 28px; height: 28px; border-radius: 9999px; display: grid; place-items: center;
+  background: var(--primary); color: var(--primary-foreground); font-weight: 700; font-size: 12px;
+  border: 2px solid var(--card); box-shadow: var(--shadow-soft);
+}
+.leaflet-container { font-family: var(--font-sans); z-index: 0; }
