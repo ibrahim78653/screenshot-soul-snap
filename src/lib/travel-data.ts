@@ -12,12 +12,12 @@ export const DESTINATIONS = [
 
 export function imageFor(destination: string) {
   const d = destination.toLowerCase();
-  const hit = DESTINATIONS.find((x) => d.includes(x.name.split(",")[0].toLowerCase()));
+  const hit = DESTINATIONS.find((x) => d.includes((x.name.split(",")[0] ?? "").toLowerCase()));
   if (hit) return hit.image;
   const pool = DESTINATIONS.map((x) => x.image);
   let h = 0;
   for (const c of d) h = (h * 31 + c.charCodeAt(0)) >>> 0;
-  return pool[h % pool.length];
+  return pool[h % pool.length]!;
 }
 
 export const INTERESTS = [

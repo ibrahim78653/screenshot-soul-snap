@@ -11,7 +11,7 @@ import { Logo } from "@/components/Logo";
 import hero from "@/assets/santorini.jpg";
 
 export const Route = createFileRoute("/auth")({
-  validateSearch: (s: Record<string, unknown>) => ({ mode: s.mode === "signup" ? "signup" : s.mode === "forgot" ? "forgot" : undefined }) as { mode?: "signup" | "forgot" },
+  validateSearch: (s: Record<string, unknown>) => (s["mode"] === "signup" || s["mode"] === "forgot" ? { mode: s["mode"] } : {}) as { mode?: "signup" | "forgot" },
   head: () => ({
     meta: [
       { title: "Sign in — TravelMate AI" },
@@ -49,7 +49,7 @@ function AuthPage() {
         return;
       }
       const parsed = schema.safeParse({ email, password });
-      if (!parsed.success) throw new Error(parsed.error.issues[0].message);
+      if (!parsed.success) throw new Error(parsed.error.issues[0]?.message);
       if (mode === "signup") {
         const { data, error } = await supabase.auth.signUp({ email, password, options: { emailRedirectTo: `${window.location.origin}/dashboard`, data: { full_name: name } } });
         if (error) throw error;

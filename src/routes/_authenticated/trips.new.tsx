@@ -17,9 +17,9 @@ import { profileQuery, tripQuery } from "@/lib/queries";
 import { cn } from "@/lib/utils";
 
 export const Route = createFileRoute("/_authenticated/trips/new")({
-  validateSearch: (s: Record<string, unknown>) => ({
-    destination: typeof s.destination === "string" ? s.destination : undefined,
-    edit: typeof s.edit === "string" ? s.edit : undefined,
+  validateSearch: (s: Record<string, unknown>): { destination?: string; edit?: string } => ({
+    ...(typeof s["destination"] === "string" ? { destination: s["destination"] } : {}),
+    ...(typeof s["edit"] === "string" ? { edit: s["edit"] } : {}),
   }),
   head: () => ({ meta: [{ title: "Plan a Trip — TravelMate AI" }, { name: "description", content: "Build a personalized AI itinerary step by step." }, { property: "og:title", content: "Plan a Trip — TravelMate AI" }, { property: "og:description", content: "Build a personalized AI itinerary." }] }),
   component: Builder,

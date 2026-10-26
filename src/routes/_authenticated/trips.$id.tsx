@@ -68,10 +68,10 @@ function TripPage() {
     try { await genDay({ data: { tripId: id, dayIndex: dayIdx, note: dayNote || undefined } }); await refresh(); setDayNote(""); toast.success(`Day ${dayIdx + 1} regenerated`); } catch (e: any) { toast.error(e.message); }
     setBusy(null);
   }
-  function move(i: number, dir: -1 | 1) { update((d) => { const a = d.days[dayIdx].activities; const j = i + dir; if (j < 0 || j >= a.length) return; [a[i], a[j]] = [a[j], a[i]]; }); }
+  function move(i: number, dir: -1 | 1) { update((d) => { const a = d.days[dayIdx]!.activities; const j = i + dir; if (j < 0 || j >= a.length) return; const t = a[i]!; a[i] = a[j]!; a[j] = t; }); }
   function saveActivity() {
     if (!editing) return;
-    update((d) => { const a = d.days[dayIdx].activities; if (editing.idx == null) a.push(editing.a); else a[editing.idx] = editing.a; a.sort((x, y) => x.time.localeCompare(y.time)); });
+    update((d) => { const a = d.days[dayIdx]!.activities; if (editing.idx == null) a.push(editing.a); else a[editing.idx] = editing.a; a.sort((x, y) => x.time.localeCompare(y.time)); });
     setEditing(null);
   }
   async function del() { await supabase.from("trips").delete().eq("id", id); qc.invalidateQueries({ queryKey: ["trips"] }); navigate({ to: "/trips" }); }
@@ -158,7 +158,7 @@ function TripPage() {
                             <button aria-label="Move up" onClick={() => move(i, -1)}><ArrowUp className="size-4" /></button>
                             <button aria-label="Move down" onClick={() => move(i, 1)}><ArrowDown className="size-4" /></button>
                             <button aria-label="Edit" onClick={() => setEditing({ a: { ...a }, idx: i })}><Pencil className="size-4" /></button>
-                            <button aria-label="Remove" onClick={() => update((d) => { d.days[dayIdx].activities.splice(i, 1); })}><Trash2 className="size-4 text-destructive" /></button>
+                            <button aria-label="Remove" onClick={() => update((d) => { d.days[dayIdx]!.activities.splice(i, 1); })}><Trash2 className="size-4 text-destructive" /></button>
                           </div>
                         </div>
                       </li>
